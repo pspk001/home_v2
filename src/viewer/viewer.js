@@ -17,19 +17,22 @@ import { LV, HOUSE_CENTER, FLOOR_Y, floorOf } from '../config.js';
 
 // Where to stand when "walking into" each room: [x, z, lookAtX, lookAtZ, pitch]
 export const WALK_SPOTS = {
-  portico: [12.4, -1.6, 6.0, -12, -0.1],
+  living: [13.4, -2.0, 3.0, -10.5, -0.1],
   lobby: [18.6, -19.8, 17.2, -9.0, -0.12],
-  living: [10.4, -20.2, 2.5, -27, -0.12],
+  bed1: [10.2, -15.0, 4.0, -24.0, -0.12],
+  bed1Closet: [10.6, -28.6, 1.5, -29.2, -0.12],
   hall: [17.2, -29.3, 17.2, -46.5, 0.2],
-  bed1: [8.8, -33.4, 2.5, -41, -0.14],
+  kitchen: [15.5, -32.6, 2.0, -40.0, -0.08],
   bed2: [25.2, -29.6, 32, -35.5, -0.14],
+  bed2Closet: [27.3, -39.0, 30.0, -45.0, -0.1],
   guest: [22.6, -11.2, 27.5, -17.5, -0.14],
-  kitchen: [22.3, -39.3, 32.0, -44.2, 0.05],
   toilet2: [22.3, -24.3, 32.0, -24.0, -0.35],
   stairBath: [20.4, -2.3, 33.0, -6.2, -0.28],
-  puja: [10.2, -44.9, 3.3, -46.0, -0.05],
+  pujaWay: [10.2, -44.9, 1.0, -46.0, -0.05],
+  puja: [-6.2, -37.4, -6.2, -47.0, 0.0],
   stair: [17.6, -6.9, 30, -6.9, 0.05],
-  garden: [-3.94, -2.4, -3.94, -40, 0.06],
+  parking: [-1.6, 0.0, -6.0, -24.0, -0.04],
+  garden: [-9.0, -29.6, -3.0, -34.0, -0.1],
   // first floor
   ffLiving: [10.2, -20.4, 2.5, -27.5, -0.1],
   ffDining: [20.6, -19.6, 15.0, -30.0, -0.06],
@@ -48,9 +51,9 @@ const DEFAULT_ROOM = { gf: 'lobby', ff: 'ffDining', roof: 'roof' };
 
 // dir: camera direction from the target; rh / rv: half width / height (ft) that must fit on screen
 const VIEWS = {
-  exterior: { dir: [-0.6, 0.27, 0.75], target: [17.7, 14.5, -18], rh: 36, rv: 29, cut: Infinity, labels: false },
+  exterior: { dir: [-0.72, 0.27, 0.62], target: [12.5, 14.5, -20], rh: 38, rv: 29, cut: Infinity, labels: false }, // from the north-west: the entrance side and the street
   dollhouse: { dir: [-0.42, 0.78, 0.47], target: [17.7, 1, -24.5], rh: 28, rv: 28, cut: 9.6, labels: true },
-  plan: { dir: [0, 1, 0.0008], target: [13.2, 2, -24.1], rh: 23.3, rv: 27.5, cut: 6.4, labels: true }, // the house and the side garden
+  plan: { dir: [0, 1, 0.0008], target: [11.2, 2, -24.1], rh: 25.4, rv: 27.5, cut: 6.4, labels: true }, // the house and the side strip
 };
 // dollhouse / plan views of each floor: [target height, section-cut height]
 const FLOOR_VIEWS = {

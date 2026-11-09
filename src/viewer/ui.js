@@ -200,7 +200,7 @@ function buildMinimap(app) {
   const host = $('#minimap');
   const NS = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(NS, 'svg');
-  svg.setAttribute('viewBox', '-10.6 -50.5 48 53'); // the plot and the side garden beside it
+  svg.setAttribute('viewBox', '-14.6 -50.5 52 53'); // the plot and the side strip beside it
   svg.setAttribute('role', 'img');
   svg.setAttribute('aria-label', 'Floor plan minimap');
   const el = (tag, attrs, parent = svg) => {
@@ -275,10 +275,10 @@ function buildMinimap(app) {
 
 function shortName(room) {
   return {
-    portico: 'Portico', lobby: 'Lobby', living: 'Living', hall: 'Dining', bed1: 'Bed 1', bed2: 'Bed 2',
+    lobby: 'Lobby', living: 'Living', hall: 'Dining', bed1: 'Bed 1', bed1Closet: 'Closet', bed2: 'Bed 2', bed2Closet: 'Closet', pujaWay: 'Way',
     guest: 'Guest', kitchen: 'Kitchen', toilet2: 'Bath', stairBath: 'Bath', puja: 'Puja', stair: 'Stair',
     ffLiving: 'Living', ffDining: 'Dining', ffKitchen: 'Kitchen', ffBed3: 'Bed 3', ffBed4: 'Bed 4', ffDress: 'Dressing',
     ffWC: 'Bath', ffStair: 'Stair', ffTerrace: 'Terrace', roof: 'Roof terrace', mumty: 'Mumty',
-    garden: 'Garden',
+    garden: 'Garden', parking: 'Parking',
   }[room.id] || room.name;
 }

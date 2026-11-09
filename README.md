@@ -1,11 +1,30 @@
-# HOME — 3D home viewer
+# HOME v2 — 3D home viewer
 
-An interactive, textured 3D model of a 35′-5″ × 49′-9″ house, built from the
-supplied ground-floor plan and dressed with the front elevation's facade, with a proposed 2BHK
-flat on the first floor, a walkable roof terrace and a side garden. Made with **three.js** (WebGL) and plain
-HTML/CSS/JavaScript.
+Version 2 of [pspk001/home](https://github.com/pspk001/home): the same 35′-5″ × 49′-9″ house, on the
+same foundation and columns, with a reworked ground floor. The main entrance is now on the north side,
+from a 13 ft side strip with an open car parking and a big puja room. Made with **three.js** (WebGL)
+and plain HTML/CSS/JavaScript.
 
-**Live site:** https://pspk001.github.io/home/
+**Live site:** https://pspk001.github.io/home_v2/ · **Version 1:** https://pspk001.github.io/home/
+
+## What changed in v2
+
+The foundation and every column of the house are unchanged: only partitions, doors and windows move.
+
+- **Portico → living room** (14′-0″ × 11′-11″, the front part of the old portico): enclosed with a front wall that has two big windows, the TV between them. A passage beside bedroom 1 leads to a wide arch into the lobby, where the old main door was.
+- **Entrance on the north side:** the main door (teak, double) is in the north wall of the living room, with granite steps up from the side strip, a wood-clad surround, a canopy, lights and the house name plate. The north side is now the entrance face.
+- **Bedroom 1, 11′-0″ × 13′-0″, with a walk-in closet:** it takes the old living room and the back of the old portico. The bed stands against the closet wall, with two north windows and the TV on the front wall. The walk-in closet behind the bed has open rails, shelves and drawers, and a full-length mirror. Its door is from the lobby, and the arch to the hall is closed.
+- **Open kitchen, 11′-0″ × 10′-8″** (the back part of the old bedroom 1): there is no wall to the dining table, and no store. The old bedroom wall is gone, and the first-floor wall above it rests on a beam between the existing columns. The window on the garden side sits over the sink. There is an L-shaped counter, hob and chimney on the back wall, a tall fridge, and a small breakfast island with two stools.
+- **Lobby open to the dining hall:** the wall between the lobby passage and the dining hall is gone.
+- **Old kitchen → bedroom 2's walk-in closet:** reached through an arch from bedroom 2, and walled off from the dining hall on grid 5. Open wardrobes run along the back and east walls, with a dressing table.
+- **Side strip, 13 ft wide (north side):** at the street there is a car gate and a pedestrian gate. Behind them come a paved entrance court with the steps to the main door, then an open car parking (the SUV), then a small garden with a tulsi chaura outside the kitchen window. The 13′ × 13′ puja room stands at the back.
+- **Puja room (13′ × 13′ outside):** built against the house's north wall in the strip and entered through teak doors from the old small puja room, which is now the way to it from the back of the hall. Inside are a carved mandir on a marble platform, brass lamps, a bell, a floor rug, and windows onto the garden. On its roof stands a small temple spire with a kalash and flag.
+- **Structure:** where first-floor walls now stand over open rooms, they rest on beams between the existing columns: grid 2 along the open kitchen, the bedroom-3 wall over bedroom 1's closet, and the terrace's back wall over bedroom 1.
+- Because the 13′ × 13′ puja room covers the back part of the house's north wall, the kitchen's window fits in the part of that wall left open beyond it (about 3′-7″ wide, from counter height to 8′-6″).
+
+| Open kitchen | Puja room | Entrance & parking |
+|---|---|---|
+| ![Open kitchen](docs/walk-kitchen.jpg) | ![Puja room](docs/walk-puja.jpg) | ![Entrance and parking](docs/walk-garden.jpg) |
 
 ![Exterior](docs/exterior.jpg)
 
@@ -27,8 +46,6 @@ HTML/CSS/JavaScript.
 ![First-floor dining](docs/walk-ff-dining.jpg)
 *Upstairs, the dining table of the first-floor flat stands at the railing, with the living room behind a slatted teak screen.*
 
-![Side garden](docs/walk-garden.jpg)
-*The side garden on the north side of the house, from its gate: stepping stones run to the tulsi chaura by the puja room, between flower beds along the boundary wall and the house.*
 
 ---
 
@@ -134,11 +151,10 @@ home/
 - **Bathroom (design change):** the two ground-floor toilets are now one bathroom (13′-6″ × 5′-6″) for the family, entered from the dining hall; the door from the guest room is closed. A double vanity, WC, and a shower with a glass screen beside the ventilator to the pipe line shaft.
 - **Common bathroom under the stair (design change):** the space under the second flight and the mid landing is a bathroom, entered from the passage to the stair. The shower and wash basin stand at floor level under the tall front window; three 6″ steps lead down to a floor sunk 1′-6″, so there is 6′-9″ clear under the landing, where the WC is. The landing is now a slab, and a wall rises beside flight 1 to the soffit of flight 2 (so flight 1 has no railing). Its layout is `STAIR_BATH` in `src/config.js`.
 - **Guest room wardrobe (design change):** the front end of the pipe line shaft (4′-10″, next to the stair) is walled off as a built-in wardrobe opening into the guest room; the guest window moved towards the back to clear it, and the bed now stands in the middle of the bathroom wall with the TV opposite it in the middle of the stair wall. On the first floor the same space is an alcove off the kitchen for the fridge and a tall pantry unit. The config is `GUEST_WR` in `src/config.js`.
-- **Bedroom doors (design change):** bedroom 1's door moved to the living-room end of its wall and bedroom 2's door to the kitchen end of its wall. Bedroom 1's wardrobe and bedroom 2's TV wall moved to suit, and the hall's crockery unit now stands where bedroom 2's old door was.
-- **Living room:** a 9′-wide window onto the portico (no sunshade, since the portico is roofed).
-- **Portico:** a full-size 7-seater SUV in graphite grey, parked nose-out. It is a generic model, not a specific make.
-- **Side garden:** the strip of land beside the house on the north side, 1 decimal (435.6 sq ft). It runs the full length of the house, 49′-9″ from the plot line at the street to the back of the puja room, so it is 8′-9.1″ wide (435.6 ÷ 49.75). Its sage compound walls (5′-6″, white coping) stand inside the land, with the front wall in line with the neighbours'. A gate in the front wall, in the house gates' style, opens onto stepping stones across the lawn that lead to a whitewashed tulsi chaura with a lamp niche by the puja room. There are flower beds along the boundary wall (hibiscus, marigold, rose and jasmine, with a frangipani near the gate and a guava at the back) and along the house wall, a bench facing the living-room window, and four low garden lights. Its size and position are `GARDEN` in `src/config.js`; it is built in `buildGarden()` in `src/build/exterior.js` and listed as a room (Garden) on the ground floor.
-- **Name plate:** raised brass letters on a black granite plate (4′-10″ × 2′-0″), beside the light slit at the front of the stair block: a name, with a designation in smaller letters below it. Its text is set in `src/materials.js` and is separate from the app's title ("HOME", in `index.html`).
+- **Bedroom 2's door (design change, v1):** moved to the old kitchen end of its wall; the hall's crockery unit stands where its old door was.
+- **Car:** a full-size 7-seater SUV in graphite grey, parked nose-out in the side strip. It is a generic model, not a specific make.
+- **Side strip (v2):** see *What changed in v2*. Its layout is `GARDEN` in `src/config.js` (width, puja room, lawn, parking, gates, main door).
+- **Name plate:** raised brass letters on a black granite plate beside the main door on the north side: a name, with a designation in smaller letters below it. Its text is set in `src/materials.js` and is separate from the app's title ("HOME", in `index.html`).
 - **Columns (design change):** two columns are added to the original column layout: one in the rear wall on grid 2 (where the old garden bay meets the dining area) and one on grid 5 at grid F (bedroom 2's wall, under the first-floor edge beam). Column B5 is shown standing in the rear glass wall. The config is `REAR_COLS` in `src/config.js` and `C-F5` in `src/plan.js`.
 - **First floor (design proposal):** the supplied drawings cover only the ground floor, so the first floor is a proposed 2BHK flat. Its partitions sit over the ground-floor walls wherever possible. From the stair landing a teak main door opens into an entrance passage, with the kitchen off it through an arch (L-shaped counter, sink under a window onto the pipe line shaft, hob and chimney, and an alcove for the fridge and a pantry unit). The passage leads to the dining area, whose 6-seater table stands at the glass railing on grid F, looking down into the double-height hall. Beyond a slatted teak screen and TV unit is the living room, which opens onto the front terrace over the portico through a sliding glass door. Bedroom 3 (the master bedroom, over bedroom 1 and the puja room) is entered from the living room. It has an armchair, a dressing table beside the door, windows to the north and east, and a large teak-framed window into the double-height hall. The north-west corner is a study corner open to the rest of the room: a bookshelf on the west wall, and beside it a work desk and office chair, where the desk faces a window looking out to the north (this corner was an attached bathroom in the first version). Bedroom 4 (over bedroom 2) opens off the dining area: its bed stands in the middle of the south wall with a TV opposite, and its clothes are in its own walk-in wardrobe and dressing room over the ground-floor kitchen. One bathroom (the old common toilet and bedroom 4's bathroom combined, 12′-0″ × 5′-6″) opens off the dining area, with a wash basin, WC and a glass-screened shower. Wet areas are stacked over the ground-floor bathroom, and the bathroom and the kitchen take light and air from the pipe line shaft. A glazed door from the stair landing also opens onto the front terrace.
 - **Glass sunroof (design change):** a 8′-7″ × 3′-10″ sunroof in the roof over the double-height dining area, along the rear wall just behind the chandelier. On the roof it sits on a white curb, with a teak-framed glass lid sloping gently forward on steel glazing bars. The config is `SUNROOF` in `src/config.js`.

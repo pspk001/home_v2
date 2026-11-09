@@ -31,7 +31,7 @@ export function buildOpenings(ctx) {
       const [sill, head] = OPENING[o.t];
       const width = hi - lo;
 
-      if (o.t === 'win' || o.t === 'kwin' || o.t === 'swin' || o.t === 'vent') {
+      if (o.t === 'win' || o.t === 'kwin' || o.t === 'bwin' || o.t === 'swin' || o.t === 'vent') {
         const fw = 0.14, fd = 0.22;
         const f0 = tc - fd / 2, f1 = tc + fd / 2;
         const frame = 'frameDark';

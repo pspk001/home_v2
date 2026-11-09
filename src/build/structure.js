@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Batcher, extrudeXZ, regroup, worldUV } from '../geometry.js';
-import { LV, OPENING, PLOT, rearZ, REAR_T, STAIR, VOID, BAY, REAR_COLS, REAR_COL_D, voidOutline, ductOutline, inDuct, STAIR_BATH, GUEST_WR } from '../config.js';
+import { LV, OPENING, PLOT, rearZ, REAR_T, STAIR, VOID, BAY, REAR_COLS, REAR_COL_D, voidOutline, ductOutline, inDuct, STAIR_BATH, GUEST_WR, GARDEN } from '../config.js';
 import { WALLS, ROOMS } from '../plan.js';
 
 const EXTERIOR = new Set(['ext', 'extTan', 'pPortico', 'siding']);
@@ -143,15 +143,23 @@ export function buildStructure(ctx) {
   //  windows on that side, with the dressing room above.)
   rearWall(0, 6.643, REAR_T, 0, TOP, 'pPuja', ['ext', null]);
   rearWall(6.643, 22.174, REAR_T, 0, VOID.glassSill, 'pHall', [null, null], 'graniteBlack');
-  rearWall(22.174, PLOT.width, REAR_T, 0, VOID.glassSill, 'pKitchen', [null, 'ext'], null);
-  rearWall(REAR_COLS[1][1], PLOT.width, REAR_T, VOID.glassSill, TOP, 'pKitchen', [null, 'ext'], null);
+  rearWall(22.174, PLOT.width, REAR_T, 0, VOID.glassSill, 'pBed2', [null, 'ext'], null);
+  rearWall(REAR_COLS[1][1], PLOT.width, REAR_T, VOID.glassSill, TOP, 'pBed2', [null, 'ext'], null);
 
   // exposed-concrete downstand beams along the edges of the first-floor slab round the
   // double-height space: on grid F (columns F2 to F5) across the hall, and on grid 2
   // between the old garden bay and the dining area (rear-wall column to D2)
   B.box(VOID.x0, VOID.hallX1, TOP - 1.0, TOP, VOID.hallFront, VOID.hallFront + 0.792, { all: 'concreteCeil', nx: null, px: null, py: null });
   B.box(REAR_COLS[0][0], VOID.x0, TOP - 1.0, TOP, rearZ(VOID.x0) + REAR_COL_D, BAY.zFront, { all: 'concreteCeil', nz: null, pz: null, py: null });
-  // …and on grid 5, between the dining area and the kitchen (rear-wall column B5 to C8),
+  // …carried on along grid 2 from the bay to column C7, where the old bedroom-1 wall was
+  // (the open kitchen has no wall to the hall; the first-floor wall above rests on this beam)
+  B.box(REAR_COLS[0][0], VOID.x0, TOP - 1.0, TOP, BAY.zFront + 0.748, -31.326, { all: 'concreteCeil', nz: null, pz: null, py: null });
+  // …and under the first-floor walls that now stand over open rooms: the bedroom-3 / living
+  // wall over bedroom 1's closet (north-wall column to C7) and the terrace's back wall over
+  // bedroom 1 (between the old portico's back columns)
+  B.box(0.792, REAR_COLS[0][0], TOP - 1.0, TOP, -30.934, -30.534, { all: 'concreteCeil', py: null });
+  B.box(0.792, 14.827, TOP - 1.0, TOP, -18.831, -18.039, { all: 'concreteCeil', py: null });
+  // …and on grid 5, between the dining area and bedroom 2's walk-in closet (the old kitchen) (rear-wall column B5 to C8),
   // under the dressing room's wall
   B.box(REAR_COLS[1][0], REAR_COLS[1][1], TOP - 1.0, TOP, rearZ(REAR_COLS[1][1]) + REAR_COL_D, -38.321, { all: 'concreteCeil', nz: null, pz: null, py: null });
 
@@ -169,7 +177,7 @@ export function buildStructure(ctx) {
         const za = rearZ(x0) + 0.05, zb = rearZ(x1) + 0.05;
         RB.prism([[x0, z1], [x1, z1], [x1, zb], [x0, za]], 0, y, { top: room.floor, bottom: null, sides: [null, null, null, null] });
       } else {
-        RB.box(x0, x1, 0, y, z0, z1, { py: room.floor, ny: null, all: null, pz: room.id === 'portico' ? 'concrete' : null });
+        RB.box(x0, x1, 0, y, z0, z1, { py: room.floor, ny: null, all: null, pz: null });
       }
     }
     const g = RB.build((k) => mats.get(k), { name: `floor-${room.id}`, castShadow: false });
@@ -204,12 +212,14 @@ export function buildStructure(ctx) {
   // ---- staircase ------------------------------------------------------------
   buildStair(ctx);
 
-  // ---- steps from portico up to the main door --------------------------------
+  // ---- steps from the entrance court (north side) up to the main door ----------------
   const SB = new Batcher();
-  const stepZ = [-16.25, -11.07];
-  SB.box(13.93, 14.827, 0, LV.gf - STAIR.rise * 0.92, stepZ[0], stepZ[1], { py: 'graniteGrey', all: 'graniteGrey', ny: null });
-  SB.box(13.03, 13.93, 0, LV.gf - STAIR.rise * 1.84, stepZ[0], stepZ[1], { py: 'graniteGrey', all: 'graniteGrey', ny: null });
-  const steps = SB.build((k) => mats.get(k), { name: 'portico-steps' });
+  const [md0, md1] = GARDEN.mainDoor, sz0 = md0 - 0.8, sz1 = md1 + 0.8;
+  const rise = (LV.gf - LV.garden) / 3;
+  SB.box(-1.6, 0, 0, LV.gf, sz0, sz1, { py: 'graniteGrey', all: 'graniteGrey', ny: null, px: null });
+  SB.box(-2.6, -1.6, 0, LV.gf - rise, sz0, sz1, { py: 'graniteGrey', all: 'graniteGrey', ny: null, px: null });
+  SB.box(-3.6, -2.6, 0, LV.gf - 2 * rise, sz0, sz1, { py: 'graniteGrey', all: 'graniteGrey', ny: null, px: null });
+  const steps = SB.build((k) => mats.get(k), { name: 'entrance-steps' });
   steps.traverse((o) => o.isMesh && walkables.push(o));
   house.add(steps);
 }
@@ -259,12 +269,10 @@ function cladding(B, ctx) {
     face('x', wx, +1, SBt.well.z0, SBt.wall[0], 'bathWall', [], lo, hiB);
   }
 
-  // Kitchen dado: 2' band above the counter on the rear (slanted) and right walls
+  // Kitchen dado: band above the counters on the north wall (round the big window) and the back wall
   const k0 = LV.gf + 2.9, k1 = LV.gf + 5.2;
-  const xa = 22.922, xb = 34.581;
-  const za = rearZ(xa) + REAR_T, zb = rearZ(xb) + REAR_T;
-  B.prism([[xa, za + t], [xb, zb + t], [xb, zb], [xa, za]], k0, k1, { top: 'kitchenDado', bottom: 'kitchenDado', sides: ['kitchenDado', 'kitchenDado', null, 'kitchenDado'] });
-  face('x', 34.581, -1, zb, -38.321, 'kitchenDado', [], k0, k1);
+  face('x', 0.792, +1, -40.9, -31.6, 'kitchenDado', [[GARDEN.puja.z1 + 0.4, -31.95, OPENING.bwin[0], OPENING.bwin[1]]], k0, k1);
+  face('z', -42.941, +1, 0.792, 11.879, 'kitchenDado', [[7.171, 11.263, OPENING.win[0], OPENING.win[1]]], k0, k1);
 }
 
 // ---------------------------------------------------------------------------

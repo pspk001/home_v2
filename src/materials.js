@@ -103,6 +103,7 @@ export class MaterialLibrary {
     paint('pKitchen', 0xf1eee6);
     paint('pToilet', 0xf2f2ef);
     paint('pPuja', 0xf4dcaa);
+    paint('pPujaBig', 0xf6e2b4);    // the big puja room
     paint('pLobby', 0xebe0cd);
     paint('pStair', 0xe8dfcf);
     // one feature wall per room (behind the bed / TV)

@@ -35,6 +35,7 @@ export const OPENING = {
   vent: [LV.gf + 6.0, LV.gf + 7.5],
   swin: [LV.gf + 4.9, LV.gf + 10.9],
   wr:   [LV.gf, LV.gf + 7.5],          // built-in wardrobe: shutters flush with the room side
+  bwin: [LV.gf + 3.0, LV.gf + 8.5],    // big windows: the open kitchen and the living room
 };
 
 // Plot: 35'-5" wide, 48'-9" deep on the left, 47'-2" on the right (slanted rear)
@@ -49,27 +50,35 @@ export const PLOT = {
 export const rearZ = (x) => PLOT.rearLeft + (PLOT.rearRight - PLOT.rearLeft) * (x / PLOT.width);
 export const REAR_T = 0.79; // rear wall thickness
 
-// Side garden: the strip of land beside the house on the north (left) side, 1 decimal
-// (435.6 sq ft). It runs the full length of the house, from the plot line at the street
-// back to the back of the puja room (49'-9"), so its breadth from the house wall out to
-// the boundary follows from the area: 435.6 / 49.748 = 8.756' (8'-9.1"). Its compound
-// walls stand inside the land; the front wall is in line with the neighbours' walls.
-const GARDEN_AREA = 435.6, GARDEN_LEN = PLOT.plotFront - PLOT.rearLeft;
+// Side strip: the land beside the house on the north (left) side, 13 ft wide (v2), from
+// the plot line at the street back to the rear line of the house (49'-9"). In v2 the main
+// entrance is on this side: from the street a car gate and a pedestrian gate open into a
+// paved entrance court and an open car parking, with the main door in the house wall; a
+// small garden lies behind the car, and at the back stands the 13' × 13' puja room.
+// Its compound walls stand inside the land; the front wall is in line with the neighbours'.
+const GARDEN_LEN = PLOT.plotFront - PLOT.rearLeft, GARDEN_W = 13.0;
 export const GARDEN = {
-  area: GARDEN_AREA,
-  x0: -GARDEN_AREA / GARDEN_LEN, x1: 0,
+  area: GARDEN_W * GARDEN_LEN,
+  x0: -GARDEN_W, x1: 0,
   z0: PLOT.rearLeft, z1: PLOT.plotFront,
   wall: 0.6,             // compound wall thickness
   front: [0.25, 0.85],   // front wall (z)
   bed: 1.575,            // flower bed along the boundary wall
   houseBed: 1.3,         // flower bed along the house wall
 };
-GARDEN.path = (GARDEN.x0 + GARDEN.wall + GARDEN.bed + GARDEN.x1 - GARDEN.houseBed) / 2; // the path, midway between the beds
-GARDEN.gate = [GARDEN.path - 1.5, GARDEN.path + 1.5];                                   // gate opening in the front wall (x)
-/** Footprints [x0, x1, z0, z1] of the garden's compound walls (the gate pillars are the inner ends of the front walls). */
+// v2 layout of the strip (z): the puja room at the back, then a small garden, the car
+// parking, and the entrance court at the front with the gates.
+GARDEN.puja = { x0: GARDEN.x0, x1: 0, z0: PLOT.rearLeft, z1: PLOT.rearLeft + 13.0, wall: 0.6 }; // outer footprint, 13' × 13'
+GARDEN.lawn = [GARDEN.puja.z1, -29.0];          // small garden behind the parked car, outside the kitchen window
+GARDEN.parking = [-29.0, -11.0];                // open car parking
+GARDEN.carGate = [GARDEN.x0 + GARDEN.wall + 0.6, -3.4];  // car gate in the front wall (x)
+GARDEN.gate = [-2.8, -0.45];                    // pedestrian gate, beside the house
+GARDEN.mainDoor = [-9.2, -5.2];                 // main door in the house wall (z), from the entrance court
+/** Footprints [x0, x1, z0, z1] of the strip's compound walls: the boundary wall (from the puja room
+ *  to the front), and the front wall's pieces round the two gates (their pillars are built separately). */
 export const gardenWalls = () => {
-  const { x0, x1, z0, wall: t, front: [f0, f1], gate: [g0, g1] } = GARDEN;
-  return [[x0, x0 + t, z0, f1], [x0 + t, x1, z0, z0 + t], [x0 + t, g0, f0, f1], [g1, x1, f0, f1]];
+  const { x0, wall: t, front: [f0, f1], carGate: [c0, c1], gate: [g0, g1], puja } = GARDEN;
+  return [[x0, x0 + t, puja.z1, f1], [x0 + t, c0, f0, f1], [c1, g0, f0, f1], [g1, 0, f0, f1]];
 };
 
 // Double-height space over the dining area and the middle of the hall: there is no
